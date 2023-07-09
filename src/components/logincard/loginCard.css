@@ -1,0 +1,15 @@
+.card {
+    display: flex;
+    width: 300px;
+    height: 400px;
+    border: 1px solid gainsboro;
+    flex-direction: column;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: whitesmoke;
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}

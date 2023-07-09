@@ -1,0 +1,48 @@
+.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+}
+
+.formInputs{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.mainLoginDiv{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3a84ca;
+}
+
+.card-group {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    margin: 7px;
+}
+
+.card-group input{
+    height: 30px;
+    width: 250px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    color: black;
+}
+
+.card-group input:active{
+    border: 1px solid gainsboro;
+}
+
+.card-group label{
+    position: relative;
+    left: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
