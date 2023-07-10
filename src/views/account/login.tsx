@@ -9,6 +9,7 @@ import ParamModel, { ParamType } from "../../models/paramsModel";
 import { useDispatch, useSelector } from "react-redux";
 import SessionState from "../../models/sessionModel";
 import { updateSessionData } from "../../redux/sessionSlice";
+import { updateRouteData } from "../../redux/routerSlice";
 
 class FormValues {
     constructor(cpf: string, password: string) {
@@ -18,12 +19,6 @@ class FormValues {
     cpf!: string;
     password!: string;
 }
-
-
-
-
-
-
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -71,6 +66,9 @@ const Login = () => {
                 }
             }else if(result.data.status === 'success'){
                 dispatch(updateSessionData(result.data.user))
+                dispatch(updateRouteData({
+                    actualRoute: 'home/index'
+                }))
             }
         } catch (err) {
             console.log(err)

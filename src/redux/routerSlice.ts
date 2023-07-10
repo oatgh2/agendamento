@@ -8,7 +8,7 @@ const initialState: Route = JSON.parse(sessionStorage.getItem('route') || '{}')
 
 
 const routeSlice = createSlice({
-  name: 'session',
+  name: 'route',
   initialState,
   reducers: {
     updateRouteData: (state, action) => {
@@ -18,7 +18,7 @@ const routeSlice = createSlice({
     },
     clearRouteData: () => {
       sessionStorage.removeItem('route');
-      return initialState;
+      return new Route();
     },
   },
 })

@@ -1,22 +1,34 @@
 import { useDispatch, useSelector } from "react-redux";
 import SessionState from "./models/sessionModel";
 import Login from "./views/account/login";
-import { clearSessionData } from "./redux/sessionSlice";
-
+import Route from "./models/routerModel";
+import HomeIndex from './views/home/index'
 
 
 
 const App = () => {
     const dispatch = useDispatch();
-    const signOut = () => {
-        dispatch(clearSessionData())
-    }
+    
     const sessionData: SessionState = useSelector((state: any) => state.session);
+    const routeData: Route = useSelector((state: any) => state.route)
     const dataExpires = new Date(sessionData.timeExpires)
     const isLogged = !!sessionData.jwt && dataExpires.getTime() > new Date().getTime()
+    const actualRoute = routeData.actualRoute;
+    const route = () => {
+        if(isLogged){
+           if(actualRoute === 'home/index')
+            return HomeIndex();
+        }else{
+            if(actualRoute === 'account/register'){
+                
+            }else{
+                return Login();
+            }
+        }
+    }
     return (
         <div className="App">
-            {!isLogged ? <Login /> : <button onClick={signOut}>Deslogar</button>}
+            {route()}
         </div>
     )
 
