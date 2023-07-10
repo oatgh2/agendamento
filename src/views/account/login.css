@@ -46,3 +46,25 @@
     left: 5px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.card-group .validation-error{
+    color: red;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+.submitForm{
+    min-width: 250px !important;
+    height: 30px;
+    background-color: #3a84ca;
+    border: none;
+    color: whitesmoke;
+}
+
+.submitForm:hover{
+    min-width: 250px !important;
+    height: 30px;
+    background-color: #2e69a0;
+    border: none;
+    color: whitesmoke;
+}
