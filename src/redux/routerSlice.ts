@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import Route from '../models/routerModel';
 
-
 const initialState: Route = JSON.parse(sessionStorage.getItem('route') || '{}')
 
 
