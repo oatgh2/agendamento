@@ -6,6 +6,9 @@ import SessionState from "../models/sessionModel";
 const apiRoute = "http://localhost:3000/schedule/v1/";
 
 export const Request = async (endpoint: string, method: string, needAuth: boolean | true, params: ParamModel[] | null = null): Promise<any> => {
+  const lockScreen = document.getElementsByClassName('lockScreen')[0]
+  lockScreen.classList.add('enabled')
+
   let config: AxiosRequestConfig = {};
   let queryParams = '';
 
@@ -33,6 +36,7 @@ export const Request = async (endpoint: string, method: string, needAuth: boolea
   config.method = method
   
   const result = await axios(config)
+  lockScreen.classList.remove('enabled')
   return result;
 }
 

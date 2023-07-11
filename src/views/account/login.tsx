@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import './login.css'
 import LoginCard from "../../components/logincard/loginCard";
 import { Formik, Form, Field, ErrorMessage, FieldProps, FormikValues } from 'formik'
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SessionState from "../../models/sessionModel";
 import { updateSessionData } from "../../redux/sessionSlice";
 import { updateRouteData } from "../../redux/routerSlice";
-
+import { useNavigate } from 'react-router-dom';
 class FormValues {
     constructor(cpf: string, password: string) {
         this.cpf = cpf
@@ -23,23 +23,25 @@ class FormValues {
 const Login = () => {
     const dispatch = useDispatch();
     const sessionData = useSelector((state: SessionState) => state);
+    const navigate = useNavigate()
+    
 
     const [form, setFormValues] = useState(new FormValues('', ''))
     const [schemaValidation, setSchemaValidation] = useState(yup.object({
         cpf: yup.string().test('cpf', 'O campo CPF é obrigatório', (value) => {
             console.log(value)
-    
+
             if (value !== undefined) {
                 const unmaskedValue = value?.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '')
-    
+
                 return unmaskedValue?.length === 11
             } else return true
         }),
         password: yup.string().required('A Senha é obrigatória')
     }));
 
-    
-    const handleSubmit = async (values: FormValues, { setSubmitting, setFieldError  }: any) => {
+
+    const handleSubmit = async (values: FormValues, { setSubmitting, setFieldError }: any) => {
         console.log(values)
         setSubmitting(false)
         setFormValues(values)
@@ -50,25 +52,23 @@ const Login = () => {
         try {
             const result = await Request('account/login', 'post', false, params)
             console.log(result);
-            if(result.data.status === 'error'){
-                if(result.data.message === 'validation errors'){
+            if (result.data.status === 'error') {
+                if (result.data.message === 'validation errors') {
                     let lista: string[] = result.data.validationErrors
                     let validCPF: string[] = lista.filter(x => x.includes('CPF'));
                     let validPass: string[] = lista.filter(x => x.includes('Senha'));
-                    
-                    if(validCPF.length > 0){
+
+                    if (validCPF.length > 0) {
                         setFieldError('cpf', validCPF[0]);
                     }
 
-                    if(validPass.length > 0) {
+                    if (validPass.length > 0) {
                         setFieldError('password', validPass[0]);
                     };
                 }
-            }else if(result.data.status === 'success'){
+            } else if (result.data.status === 'success') {
                 dispatch(updateSessionData(result.data.user))
-                dispatch(updateRouteData({
-                    actualRoute: 'home/index'
-                }))
+                navigate('/home')
             }
         } catch (err) {
             console.log(err)
@@ -87,7 +87,7 @@ const Login = () => {
                         <LoginCard>
                             <div className="formInputs">
                                 <div className="row">
-                                    
+
                                 </div>
                                 <div className="row">
                                     <div className="card-group">
