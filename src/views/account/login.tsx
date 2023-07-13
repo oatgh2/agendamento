@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SessionState from "../../models/sessionModel";
 import { updateSessionData } from "../../redux/sessionSlice";
 import { updateRouteData } from "../../redux/routerSlice";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 class FormValues {
     constructor(cpf: string, password: string) {
         this.cpf = cpf
@@ -20,11 +20,11 @@ class FormValues {
     password!: string;
 }
 
-const Login = () => {
+const Login = (props: any) => {
     const dispatch = useDispatch();
     const sessionData = useSelector((state: SessionState) => state);
     const navigate = useNavigate()
-    
+    const { msg, type } = useParams();
 
     const [form, setFormValues] = useState(new FormValues('', ''))
     const [schemaValidation, setSchemaValidation] = useState(yup.object({
@@ -40,6 +40,10 @@ const Login = () => {
         password: yup.string().required('A Senha é obrigatória')
     }));
 
+
+    const handleGoToRegister = () => {
+        navigate('/register')
+    }
 
     const handleSubmit = async (values: FormValues, { setSubmitting, setFieldError }: any) => {
         console.log(values)
@@ -72,6 +76,7 @@ const Login = () => {
             }
         } catch (err) {
             console.log(err)
+            setFieldError('confirmPassword', 'Ocorreu um erro, tente novamente mais tarde');
         }
     }
 
@@ -85,9 +90,12 @@ const Login = () => {
                 {({ errors, handleSubmit, isSubmitting }) => (
                     <form onSubmit={handleSubmit}>
                         <LoginCard>
+
                             <div className="formInputs">
                                 <div className="row">
-
+                                    {msg &&(
+                                        <span className={type}>{msg}</span>
+                                    )}
                                 </div>
                                 <div className="row">
                                     <div className="card-group">
@@ -114,7 +122,10 @@ const Login = () => {
                                 <div style={{
                                     justifyContent: 'center',
                                 }} className="row">
-                                    <button type="submit" disabled={isSubmitting} className="submitForm">Enviar</button>
+                                    <button type="submit" disabled={isSubmitting} className="submitForm">Logar</button>
+                                </div>
+                                <div className="row">
+                                    <button type="button" onClick={handleGoToRegister} className="submitForm">Registrar</button>
                                 </div>
                             </div>
                         </LoginCard>

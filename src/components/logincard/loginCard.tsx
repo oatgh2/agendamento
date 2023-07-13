@@ -3,9 +3,9 @@ import './loginCard.css'
 
 
 const LoginCard = (props: any) => {
-    const { children } = props
+    const { children, style } = props
     return (
-        <div className="card">
+        <div style={style} className="card">
             {children}
         </div>
     )

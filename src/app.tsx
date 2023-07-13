@@ -4,6 +4,7 @@ import Login from "./views/account/login";
 import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
 import Home from "./views/home/index";
 import { useEffect } from 'react'
+import Register from "./views/account/register";
 
 
 
@@ -12,17 +13,17 @@ const App = () => {
 
     function ProtectedRoute(props: any) {
         const navigate = useNavigate();
-        const temSessao = isLogged;
+        const hasSession = isLogged;
 
         const { children, error } = props
 
         useEffect(() => {
-            if (!temSessao) {
+            if (!hasSession) {
                 navigate('/login');
             }
-        }, [temSessao, navigate])
+        }, [hasSession, navigate])
 
-        if (!temSessao)
+        if (!hasSession)
             return null
         //Global
         return (
@@ -42,6 +43,25 @@ const App = () => {
         <div className="App">
             <Router>
                 <Routes>
+                    {/* Homes */}
+                    <Route path="/home/index" element=
+                        {
+                            <ProtectedRoute>
+                                <Home />
+                            </ProtectedRoute>
+                        } />
+                    <Route path="/home" element=
+                        {
+                            <ProtectedRoute>
+                                <Home />
+                            </ProtectedRoute>
+                        } />
+                    <Route path="*" element=
+                        {
+                            <ProtectedRoute error={"Caminho não econtrado"}>
+                                <Home />
+                            </ProtectedRoute>
+                        } />
                     <Route path="/" element=
                         {
                             <ProtectedRoute>
@@ -62,6 +82,9 @@ const App = () => {
                         } />
                     {/* Outras rotas */}
                     <Route path="/login" element={<Login />} />
+                    <Route path="/login/:msg" element={<Login />} />
+                    <Route path="/login/:type/:msg" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                 </Routes>
             </Router>
         </div>

@@ -68,3 +68,15 @@
     border: none;
     color: whitesmoke;
 }
+
+.success{
+    color: green;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16pt;
+}
+
+.error{
+    color: red;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16pt;
+}
